@@ -6,7 +6,8 @@
     <test name="First test">
 
         <classes>
-            <class name="ua.ithillel.ui.BaseUITest"/>
+            <class name="ua.ithillel.ui.PageLoginTest"/>
+            <class name="ua.ithillel.ui.PageRegistrationTest"/>
         </classes>
     </test>
 </suite>

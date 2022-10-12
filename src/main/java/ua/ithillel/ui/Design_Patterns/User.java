@@ -1,94 +1,94 @@
 package ua.ithillel.ui.Design_Patterns;
 
-public class User
-{
-    private final String userName; // required
-    private final String firstName; // required
-    private final String lastName; // required
-    private final String email; // optional
-    private final String password; // optional
+import com.github.javafaker.Faker;
 
-    private User(UserBuilder builder) {
-        this.userName = builder.userName;
-        this.firstName = builder.firstName;
-        this.lastName = builder.lastName;
-        this.email = builder.email;
-        this.password = builder.password;
+
+
+public class User {
+    private String userName;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+
+    public User(String userName,String firstName,String lastName,String email,String password) {
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     public String getUserName() {
         return userName;
     }
+
     public String getFirstName() {
         return firstName;
     }
+
     public String getLastName() {
         return lastName;
     }
+
     public String getEmail() {
         return email;
     }
+
     public String getPassword() {
         return password;
     }
 
-    @Override
-    public String toString() {
-        return "User: "+this.userName+", "+this.firstName+", "+this.lastName+", "+this.email+", "+this.password;
-    }
-
-    public static class UserBuilder
-    {
-        private final String userName;
-        private final String firstName;
-        private final String lastName;
+    public static class Builder {
+        private String userName;
+        private String firstName;
+        private String lastName;
         private String email;
         private String password;
 
-        public UserBuilder(String firstName, String lastName,String userName) {
-            this.firstName = firstName;
-            this.lastName = lastName;
+        public Builder setUserName(String userName) {
             this.userName = userName;
+            return this;
         }
 
-        public UserBuilder email(String email) {
+        public Builder setFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder setLastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder setEmail(String email) {
             this.email = email;
             return this;
         }
-        public UserBuilder password(String password) {
+
+        public Builder setPassword(String password) {
             this.password = password;
             return this;
         }
+
+
         public User build() {
-            User user =  new User(this);
-            validateUserObject(user);
-            return user;
-        }
-        private void validateUserObject(User user) {
+            return new User(userName,firstName,lastName,email,password);
         }
     }
 
+    public static User buildRandomUser() {
+            Faker faker = new Faker();
+            return new User(faker.name().username(),faker.name().firstName(),faker.name().lastName(),faker.internet().emailAddress(),"pwd");
+        }
 
-    public static void main(String[] args)
-    {
-        User user1 = new User.UserBuilder( "Gupta","Lokesh", "Visla")
-                .email("1234567@gmail.com")
-                .password("forty thousand paws shoved a banana up their ass")
-                .build();
 
-        System.out.println(user1);
 
-        User user2 = new User.UserBuilder("Jack", "Reacher", "Cemion")
-                .email("1234567@gmail.com")
-                .password("forty thousand paws shoved a banana up their ass")
-                .build();
 
-        System.out.println(user2);
 
-        User user3 = new User.UserBuilder("Super", "Man", "Rugaro")
-
-                .build();
-
-        System.out.println(user3);
-    }
 }
+
